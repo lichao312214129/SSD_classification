@@ -5,8 +5,8 @@ import pandas as pd
 from matplotlib.pyplot import MultipleLocator
 from matplotlib.backends.backend_pdf import PdfPages
 
-permutation_pooledcv = np.load(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\permutation_pooledcv.npy', allow_pickle=True)
-permutation_feu = np.load(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\permutation_feu.npy', allow_pickle=True)
+permutation_pooledcv = np.load(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_fc_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy', allow_pickle=True)
+permutation_feu = np.load( r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_fc_feu_excluded_greater_fd_and_regressed_out_site_age_sex_motion_all.npy', allow_pickle=True)
 
 # Pooled
 plt.figure(figsize=(12,7))
@@ -55,21 +55,19 @@ plt.title(f'Specificity\np={pvalue:.3f}')
 
 #%% performances
 # Inputs
-classification_results_pooling_file = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_pooled.npy'
-classification_results_results_leave_one_site_cv_file = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_fc_excluded_greater_fd_and_regressed_out_site_sex_motion_all.npy'
-classification_results_feu_file = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_feu.npy'
+classification_results_pooling_file = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy'
+classification_results_feu_file = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.npy'
 
 # Load and proprocess
 results_pooling = np.load(classification_results_pooling_file, allow_pickle=True)
-results_leave_one_site_cv = np.load(classification_results_results_leave_one_site_cv_file, allow_pickle=True)
 results_feu = np.load(classification_results_feu_file, allow_pickle=True)
 
 #
-accuracy_pooling, sensitivity_pooling, specificity_pooling = results_pooling[0,:], results_pooling[1,:], results_pooling[2,:]
+accuracy_pooling, sensitivity_pooling, specificity_pooling = results_pooling[:,0], results_pooling[:,1], results_pooling[:,2]
 performances_pooling = [accuracy_pooling, sensitivity_pooling, specificity_pooling]
 performances_pooling = pd.DataFrame(performances_pooling)
 
-accuracy_feu, sensitivity_feu, specificity_feu = results_feu[0,:], results_feu[1,:], results_feu[2,:]
+accuracy_feu, sensitivity_feu, specificity_feu = results_feu[:,0], results_feu[:,1], results_feu[:,2]
 performances_feu = [accuracy_feu, sensitivity_feu, specificity_feu]
 performances_feu = pd.DataFrame(performances_feu)
 
@@ -82,7 +80,7 @@ color = ['darkturquoise'] * 3 +  ['paleturquoise'] * 3
 plt.bar(np.arange(0,len(all_mean)), all_mean, yerr = error, 
         capsize=5, linewidth=2, color=color)
 # plt.tick_params(labelsize=10)
-plt.xticks(np.arange(0,len(all_mean)), ['Accuracy', 'Sensitivity', 'Sensitivity'] * 3, fontsize=10, rotation=45, ha='right')
+plt.xticks(np.arange(0,len(all_mean)), ['Accuracy', 'Sensitivity', 'Specificity'] * 3, fontsize=10, rotation=45, ha='right')
 plt.title('Classification performances')
 y_major_locator=MultipleLocator(0.1)
 ax = plt.gca()
@@ -93,7 +91,7 @@ plt.grid(axis='y')
 
     
 plt.subplots_adjust(wspace=0.4, hspace=0.5)
-# plt.tight_layout()
+plt.tight_layout()
 # pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\permutation_test.pdf')
 # pdf.savefig()
 # pdf.close()

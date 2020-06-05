@@ -67,7 +67,7 @@ class PCASVCPooling():
                  dataset_206=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_206.npy',
                  dataset_COBRE=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_COBRE.npy',
                  dataset_UCAL=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_UCLA.npy',
-                 resid_all=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_excluded_greater_fd_and_regressed_out_site_sex_motion_all.mat',
+                 resid_all=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.mat',
                  n_perm = 500,
                  is_dim_reduction=True,
                  components=0.95,
@@ -95,11 +95,11 @@ class PCASVCPooling():
         feature_all = data_all[:,3:]
         accuracy, sensitivity, specificity, AUC = np.array([]), np.array([]), np.array([]), np.array([])
         print('Permutation testing...\n')
-        with ThreadPoolExecutor(4) as executor:   
+        with ThreadPoolExecutor(8) as executor:   
             to_do = []             
             for i in range(self.n_perm):
                 label_all_perm = np.random.permutation(label_all)
-                future = executor.submit(self.main_function, label_all_perm, feature_all)
+                future = executor.submit(self.main_function, i, label_all_perm, feature_all)
                 to_do.append(future)
                 
         results = []
@@ -108,19 +108,19 @@ class PCASVCPooling():
             results.append(np.array(res))
             
         print("Get real performances...\n")
-        results_real = self.main_function(label_all, feature_all)  
+        results_real = self.main_function(i, label_all, feature_all)  
         results_real = np.array(results_real).reshape(-1, len(results_real))
         results = np.array(results)
         results_all = np.vstack([results_real, results])
         
-        np.save(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_feu.npy', results_real)
+        # np.save(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.npy', results_real)
         
         return results_all
 
-    def main_function(self, label_all_perm, feature_all):
+    def main_function(self, i, label_all_perm, feature_all):
         """The training data, validation data and  test data are randomly splited
         """
-        print("One permutaion...\n")
+        print(f"Permutaion {i}...\n")
         # KFold Cross Validation
         accuracy, sensitivity, specificity, AUC = np.array([]), np.array([]), np.array([]), np.array([])      
         kf = KFold(n_splits=self.cv, shuffle=True, random_state=0)
@@ -156,6 +156,7 @@ class PCASVCPooling():
             AUC = np.append(AUC, auc)
 
         return np.mean(accuracy),np.mean(sensitivity), np.mean(specificity), np.mean(AUC)
+        # return accuracy,sensitivity, specificity, AUC
 
     def dimReduction(self, train_X, test_X, pca_n_component):
         train_X, trained_pca = dimreduction.pca(train_X, pca_n_component)
@@ -189,17 +190,17 @@ class PCASVCPooling():
 if __name__ == '__main__':
     clf=PCASVCPooling()
     results=clf.permutation()
-    clf.save_results(results, r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\permutation_feu.npy')
+    clf.save_results(results, r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_fc_feu_excluded_greater_fd_and_regressed_out_site_age_sex_motion_all.npy')
     print("Done!")
     
-    dd = np.load( r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\permutation_feu.npy', allow_pickle=True)
+    dd = np.load( r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_fc_feu_excluded_greater_fd_and_regressed_out_site_age_sex_motion_all.npy', allow_pickle=True)
     
+    # Get FEU
     # resid_all = read_mat(clf.resid_all)
-    
     # feu = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_firstepisode_and_unmedicated_550.npy'
     # feu = np.load(feu)
     # resid_feu = resid_all[np.in1d(resid_all[:,0],feu[:,0])]
-    # write_mat(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\resid_firstepisode_and_unmedicated_550.mat', 'resid_firstepisode_and_unmedicated_550', resid_feu)
+    # write_mat(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.mat', 'fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately', resid_feu)
     
     
     

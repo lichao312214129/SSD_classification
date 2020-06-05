@@ -3,7 +3,7 @@
 % to get demographic information.
 
 %================================================================
-%% Correction of site, gender and head motion all together (Excluded subjects with greater head motion)
+%% Correction of site, age, gender and head motion all together (Excluded subjects with greater head motion)
 % Inputs
 data_file = 'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_all.mat';
 demographic_file = 'D:\WorkStation_2018\SZ_classification\Scale\demographic_all.xlsx';
@@ -23,17 +23,17 @@ for i = 1:4
     site_design(:,i) = demographic(:,end) == i-1;
 end
 
-independent_variables_all = cat(2,site_design, demographic(:,[4 5]));
+independent_variables_all = cat(2,site_design, demographic(:,[3 4 5]));
 beta_value_all = independent_variables_all\data(:,3:end);
 resid_all =  data(:,3:end) - independent_variables_all*beta_value_all;
 
 % Get residual error
 resid_all = cat(2, data(:,1:2),demographic(:,end), resid_all);
-save('D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_excluded_greater_fd_and_regressed_out_site_sex_motion_all.mat', 'resid_all');
+save('D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_excluded_greater_fd_and_regressed_out_site_age_sex_motion_all.mat', 'resid_all');
 
 
 %================================================================
-%% Correction of gender and headmotion on training data and applied beta to test data (Exclude subjects with greater head motion)
+%% Correction of age, gender and headmotion on training data and applied beta to test data (Exclude subjects with greater head motion)
 % Inputs
 data_file = 'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_all.mat';
 demographic_file = 'D:\WorkStation_2018\SZ_classification\Scale\demographic_all.xlsx';
@@ -49,19 +49,50 @@ data = data(loc_acceptable_headmotion,:);
 loc_train = demographic(:,end) ~=0;
 
 % Fit sex and headmotion
-indep_sex_headmotion_train = demographic(:,[4 5]);
+indep_sex_headmotion_train = demographic(:,[3 4 5]);
 indep_sex_headmotion_train = indep_sex_headmotion_train(loc_train, :);
 dep_sex_headmotion_train = data(:,3:end);
 dep_sex_headmotion_train = dep_sex_headmotion_train(loc_train, :);
 beta_value_sex_headmotion_train = indep_sex_headmotion_train\dep_sex_headmotion_train;
 
 % Regress out for all subjects
-resid_all = data(:,3:end) - demographic(:,[4 5])*beta_value_sex_headmotion_train;
+resid_all = data(:,3:end) - demographic(:,[3 4 5])*beta_value_sex_headmotion_train;
 
 % Concat
 resid_all = cat(2, data(:,1:2),demographic(:,end), resid_all);
-save('D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_excluded_greater_fd_and_regressed_outsex_motion_separately.mat', 'resid_all');
+save('D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.mat', 'resid_all');
 
+%================================================================
+%% For FEU: Correction of age, gender and headmotion together
+% Inputs
+data_file = 'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_firstepisode_and_unmedicated_550.mat';
+demographic_file = 'D:\WorkStation_2018\SZ_classification\Scale\demographic_all.xlsx';
+% Load
+data = importdata(data_file);
+[demographic, header] = xlsread(demographic_file);
+demographic(:,4) = demographic(:,4) == 1;
+
+% Match demo and data
+[h,loc] = ismember(data(:,1), demographic(:,1));
+loc = loc(h);
+demographic = demographic(loc, :);
+
+% Exclude subjects with greater head motion
+loc_acceptable_headmotion = demographic(:,5)<=0.3;
+demographic = demographic(loc_acceptable_headmotion,:);
+data = data(loc_acceptable_headmotion,:);
+
+% Fit sex and headmotion
+indep_sex_headmotion = demographic(:,[3 4 5]);
+dep_sex_headmotion = data(:,3:end);
+beta_value_sex_headmotion = indep_sex_headmotion\dep_sex_headmotion;
+
+% Regress out for all subjects
+resid_all = data(:,3:end) - demographic(:,[3 4 5])*beta_value_sex_headmotion;
+
+% Concat
+resid_all = cat(2, data(:,1:2),demographic(:,end), resid_all);
+save('D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.mat', 'resid_all');
 
 %================================================================
 %% Compare age, sex, headmotion between patients and hc
