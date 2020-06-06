@@ -67,7 +67,7 @@ class PCASVCPooling():
                  dataset_206=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_206.npy',
                  dataset_COBRE=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_COBRE.npy',
                  dataset_UCAL=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_UCLA.npy',
-                 resid_all=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.mat',
+                 resid_all=r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.mat',
                  n_perm = 500,
                  is_dim_reduction=True,
                  components=0.95,
@@ -105,17 +105,16 @@ class PCASVCPooling():
         results = []
         for future in futures.as_completed(to_do):
             res = future.result()
-            results.append(np.array(res))
+            results.append(res)
             
         print("Get real performances...\n")
         results_real = self.main_function(i, label_all, feature_all)  
-        results_real = np.array(results_real).reshape(-1, len(results_real))
-        results = np.array(results)
-        results_all = np.vstack([results_real, results])
+        results = results
+        results.append(results_real)
         
         # np.save(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\results_real_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.npy', results_real)
         
-        return results_all
+        return results
 
     def main_function(self, i, label_all_perm, feature_all):
         """The training data, validation data and  test data are randomly splited
@@ -155,8 +154,8 @@ class PCASVCPooling():
             specificity = np.append(specificity, spec)
             AUC = np.append(AUC, auc)
 
-        return np.mean(accuracy),np.mean(sensitivity), np.mean(specificity), np.mean(AUC)
-        # return accuracy,sensitivity, specificity, AUC
+        # return np.mean(accuracy),np.mean(sensitivity), np.mean(specificity), np.mean(AUC)
+        return accuracy,sensitivity, specificity, AUC
 
     def dimReduction(self, train_X, test_X, pca_n_component):
         train_X, trained_pca = dimreduction.pca(train_X, pca_n_component)
@@ -190,10 +189,10 @@ class PCASVCPooling():
 if __name__ == '__main__':
     clf=PCASVCPooling()
     results=clf.permutation()
-    clf.save_results(results, r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_fc_feu_excluded_greater_fd_and_regressed_out_site_age_sex_motion_all.npy')
+    clf.save_results(results, r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy')
     print("Done!")
     
-    dd = np.load( r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_fc_feu_excluded_greater_fd_and_regressed_out_site_age_sex_motion_all.npy', allow_pickle=True)
+    dd = np.load( r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy', allow_pickle=True)
     
     # Get FEU
     # resid_all = read_mat(clf.resid_all)

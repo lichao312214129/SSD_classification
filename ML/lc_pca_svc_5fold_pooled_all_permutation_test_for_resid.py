@@ -188,9 +188,9 @@ class PCASVCPooling():
 #
 if __name__ == '__main__':
     clf=PCASVCPooling()
-    results=clf.permutation()
-    clf.save_results(results, r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy')
-    print("Done!")
+    # results=clf.permutation()
+    # clf.save_results(results, r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy')
+    # print("Done!")
     
     dd = np.load( r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\performances_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.npy', allow_pickle=True)
     
@@ -199,7 +199,7 @@ if __name__ == '__main__':
     # feu = r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\dataset_firstepisode_and_unmedicated_550.npy'
     # feu = np.load(feu)
     # resid_feu = resid_all[np.in1d(resid_all[:,0],feu[:,0])]
-    # write_mat(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all.mat', 'fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_all', resid_feu)
+    # write_mat(r'D:\WorkStation_2018\SZ_classification\Data\ML_data_npy\fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately.mat', 'fc_feu_excluded_greater_fd_and_regressed_out_age_sex_motion_separately', resid_feu)
     
     
     

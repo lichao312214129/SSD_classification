@@ -1,4 +1,4 @@
-% This script is used to regressing confounds: sex, headmotion and/or site.
+% This script is used to regressing confounds: age, sex, headmotion and/or site.
 % Before running this script, make sure you have run lc_demographic_information_statistics.py
 % to get demographic information.
 
@@ -178,3 +178,5 @@ save('D:\WorkStation_2018\SZ_classification\Scale\headmotion_p_site1', 'headmoti
 save('D:\WorkStation_2018\SZ_classification\Scale\headmotion_c_site1', 'headmotion_c_site1');
 save('D:\WorkStation_2018\SZ_classification\Scale\headmotion_p_site234', 'headmotion_p_site234');
 save('D:\WorkStation_2018\SZ_classification\Scale\headmotion_c_site234', 'headmotion_c_site234');
+
+

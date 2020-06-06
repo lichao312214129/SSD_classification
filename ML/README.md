@@ -10,5 +10,7 @@
 
 <font >**lc_pca_svc_leave_one_site_out_cv_for_resid.py**</font> is used to perform machine learning for leave-one-site-out cross-validation using residual error as features (correction of site and covariates).  
 
-<font >**lc_pca_svc_5fold_permutation_test_for_resid.py**</font> is used to perform permutation test for 5-fold cross-validation using residual error as features (correction of site and covariates).  
+<font >**lc_pca_svc_5fold_pooled_all_permutation_test_for_resid**</font> is used to perform permutation test for 5-fold cross-validation pooled all datasets using residual error as features (correction of site and covariates).  
+
+<font >**lc_pca_svc_5fold_feu_permutation_test_for_resid.py**</font> is used to perform permutation test for 5-fold cross-validation that only included first episode unmedicated SSD using residual error as features (correction of site and covariates).  
 
