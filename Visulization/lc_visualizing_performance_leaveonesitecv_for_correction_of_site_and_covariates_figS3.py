@@ -42,8 +42,8 @@ scale_550_selected_all = pd.merge(results_special_all, scale_550, left_on=0, rig
 
 
 #%% Calculate performance for Schizophrenia Spectrum subgroups
-duration = 18  # Upper limit of first episode: 
-# Frist episode unmedicated; first episode medicated; chronic medicated
+duration = 18  # Upper limit of first-episode: 
+# Frist episode unmedicated; first-episode medicated; chronic medicated
 # all_svc
 data_chronic_medicated_SSD_550_18_all = scale_550_selected_all[
     (scale_550_selected_all['诊断']==3) & 
@@ -106,8 +106,8 @@ scale_550_selected_separatly = pd.merge(results_special, scale_550, left_on=0, r
 
 
 #%% Calculate performance for Schizophrenia Spectrum subgroups
-duration = 18  # Upper limit of first episode: 
-# Frist episode unmedicated; first episode medicated; chronic medicated
+duration = 18  # Upper limit of first-episode: 
+# Frist episode unmedicated; first-episode medicated; chronic medicated
 # all_svc
 data_chronic_medicated_SSD_550_18_separatly = scale_550_selected_separatly[
     (scale_550_selected_separatly['诊断']==3) & 
@@ -187,12 +187,12 @@ ax2 = plt.bar(
 plt.grid(axis='y')
 
 plt.yticks(fontsize=12)
-plt.xticks([0.5, 3, 5.5, 8, 10.5, 13], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first episode medicated SSD', 'Sensitivity of first episode unmedicated SSD'], rotation=45, ha="right")  
+plt.xticks([0.5, 3, 5.5, 8, 10.5, 13], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first-episode medicated SSD', 'Sensitivity of first-episode unmedicated SSD'], rotation=45, ha="right")  
 plt.legend([ax1, ax2], ['Correction pooled all datasets', 'Correction separately'], loc='upper left')
 
 plt.subplots_adjust(wspace = 0.5, hspace =1)
 plt.tight_layout()
-pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\Correaction_of_site_and_cov.pdf')
+pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\Figure S3.pdf')
 pdf.savefig()
 pdf.close()
 plt.show()

@@ -61,8 +61,8 @@ scale_550_selected_pca99 = pd.merge(results_special_pca99, scale_550, left_on=0,
 scale_550_selected_pca95_lr = pd.merge(results_special_pca95_lr, scale_550, left_on=0, right_on='folder', how='inner')
 
 #%% Calculate performance for Schizophrenia Spectrum subgroups
-duration = 18  # Upper limit of first episode: 
-# Frist episode unmedicated; first episode medicated; chronic medicated
+duration = 18  # Upper limit of first-episode: 
+# Frist episode unmedicated; first-episode medicated; chronic medicated
 # pca70_svc
 data_chronic_medicated_SSD_550_18_pca70 = scale_550_selected_pca70[
     (scale_550_selected_pca70['诊断']==3) & 
@@ -253,7 +253,7 @@ plt.bar([0,1,2,3,4,5],
     alpha=0.5
 )
 plt.yticks(fontsize=12)
-plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first episode medicated SSD', 'Sensitivity of first episode unmedicated SSD'], rotation=45, ha="right")  
+plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first-episode medicated SSD', 'Sensitivity of first-episode unmedicated SSD'], rotation=45, ha="right")  
 plt.grid(axis='y')
 plt.title('PCA_70_svc', fontsize=15, fontweight='bold')
 
@@ -266,7 +266,7 @@ plt.bar([0,1,2,3,4,5],
     alpha=0.5
 )
 plt.yticks(fontsize=12)
-plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first episode medicated SSD', 'Sensitivity of first episode unmedicated SSD'], rotation=45, ha="right")  
+plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first-episode medicated SSD', 'Sensitivity of first-episode unmedicated SSD'], rotation=45, ha="right")  
 plt.grid(axis='y')
 plt.title('PCA_80_svc', fontsize=15, fontweight='bold')
 
@@ -279,7 +279,7 @@ plt.bar([0,1,2,3,4,5],
     alpha=0.5
 )
 plt.yticks(fontsize=12)
-plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first episode medicated SSD', 'Sensitivity of first episode unmedicated SSD'], rotation=45, ha="right")  
+plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first-episode medicated SSD', 'Sensitivity of first-episode unmedicated SSD'], rotation=45, ha="right")  
 plt.grid(axis='y')
 plt.title('PCA_99_svc', fontsize=15, fontweight='bold')
 
@@ -292,15 +292,15 @@ plt.bar([0,1,2,3,4,5],
     alpha=0.5
 )
 plt.yticks(fontsize=12)
-plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first episode medicated SSD', 'Sensitivity of first episode unmedicated SSD'], rotation=45, ha="right")  
+plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic SSD', 'Sensitivity of first-episode medicated SSD', 'Sensitivity of first-episode unmedicated SSD'], rotation=45, ha="right")  
 plt.grid(axis='y')
 plt.title('PCA_95_lr', fontsize=15, fontweight='bold')
 
 plt.subplots_adjust(wspace = 0.5, hspace =1)
 plt.tight_layout()
-# pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\other_component.pdf')
-# pdf.savefig()
-# pdf.close()
+pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\Figure S7.pdf')
+pdf.savefig()
+pdf.close()
 plt.show()
 print('-'*50)
 

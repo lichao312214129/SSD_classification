@@ -40,8 +40,8 @@ results_special_figure3.iloc[:, 0] = np.int32(results_special_figure3.iloc[:, 0]
 # Filter subjects that have .mat files
 scale_550_selected_figure3 = pd.merge(results_special_figure3, scale_550, left_on=0, right_on='folder', how='inner')
 #%% Calculate performance for Schizophrenia Spectrum subgroups
-duration = 18  # Upper limit of first episode: 
-# Frist episode unmedicated; first episode medicated; chronic medicated
+duration = 18  # Upper limit of first-episode: 
+# Frist episode unmedicated; first-episode medicated; chronic medicated
 # figure3_svc
 data_chronic_medicated_SSD_550_18_figure3 = scale_550_selected_figure3[
     (scale_550_selected_figure3['诊断']==3) & 
@@ -102,16 +102,18 @@ plt.bar([0,1,2,3,4,5],
     linewidth=3,
 )
 plt.yticks(fontsize=12)
-plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic medicated SSD', 'Sensitivity of first episode medicated SSD', 'Sensitivity of first episode unmedicated SSD'], rotation=45, ha="right")  
+plt.xticks([0, 1, 2, 3, 4, 5], ['Accuracy', 'Sensitivity','Specificity', 'Sensitivity of chronic medicated SSD', 'Sensitivity of first-episode medicated SSD', 'Sensitivity of first-episode unmedicated SSD'], rotation=45, ha="right")  
 plt.grid(axis='y')
+ax = plt.gca()
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
 plt.title('Classification performances', fontsize=12, fontweight='bold')
 
 plt.subplots_adjust(wspace = 0.5, hspace =1)
 plt.tight_layout()
-pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\performances_fig3.pdf')
+pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\Figure 3.pdf')
 pdf.savefig()
 pdf.close()
 plt.show()
 print('-'*50)
-
 

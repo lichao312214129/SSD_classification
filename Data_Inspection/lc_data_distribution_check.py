@@ -59,29 +59,28 @@ sio.savemat(r'D:\WorkStation_2018\SZ_classification\Data\matrix_UCAL.mat', {'mat
 sio.savemat(r'D:\WorkStation_2018\SZ_classification\Data\matrix_COBRE.mat', {'matrix_COBRE': matrix_COBRE})
 #%% -------------------------------Visualization------------------------------
 # Show matrix
-plt.figure(figsize=(20,7))
-
-plt.subplot(2, 5, 1)
+plt.figure(figsize=(15,8))
+plt.subplot(2, 4, 1)
 plt.imshow(matrix_550, cmap='jet',vmax=1, vmin=-0.5)
 plt.grid(False)
 plt.title('Dataset 1')
 plt.xticks([])
 plt.yticks([])
 
-plt.subplot(2, 5, 2)
+plt.subplot(2, 4, 2)
 plt.imshow(matrix_206, cmap='jet',vmax=1, vmin=-0.5)
 plt.grid(False)
 plt.title('Dataset 2')
 plt.xticks([])
 plt.yticks([])
-plt.subplot(2, 5, 3)
+plt.subplot(2, 4, 3)
 plt.imshow(matrix_COBRE, cmap='jet',vmax=1, vmin=-0.5)
 plt.grid(False)
 plt.title('Dataset 3')
 plt.xticks([])
 plt.yticks([])
 
-plt.subplot(2, 5, 4)
+plt.subplot(2, 4, 4)
 plt.imshow(matrix_UCAL, cmap='jet',vmax=1, vmin=-0.5)
 plt.grid(False)
 plt.title('Dateset 4')
@@ -90,24 +89,36 @@ plt.yticks([])
 
 # Plot correlation heatmap
 plt.subplot(2, 5, 6)
-heatmap = sns.heatmap(corrcoef , annot=True, fmt = '.2f', cmap='jet')
+heatmap = sns.heatmap(corrcoef , annot=True, fmt = '.2f', cmap='jet', cbar=False)
+# plt.imshow(corrcoef, cmap='jet')
 plt.xticks()
 plt.xticks([0.5, 1.5, 2.5, 3.5], ['Dataset 1',
                           'Dataset 2',
-                          'Dataset 3', 'Dataset 4'], rotation = 45)
+                          'Dataset 3', 'Dataset 4'], fontsize=10, rotation = 45, ha='right')
     
 plt.yticks([0.5, 1.5, 2.5, 3.5], ['Dataset 1',
                           'Dataset 2',
-                          'Dataset 3', 'Dataset 4'], rotation = 0)
-plt.title('Correlations')
-plt.show()
+                        'Dataset 3', 'Dataset 4'],  fontsize=10, rotation = 0, ha='right')
 
-# Plot hist
+ax  = plt.gca()
+ax.set_aspect('equal') 
+
+plt.title('Correlations')
+plt.subplots_adjust(wspace=0.2, hspace=0.2)
+# plt.tight_layout()
+# pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\fc_matrics_and_correlation.pdf')
+# pdf.savefig()
+# pdf.close()
+
+# Plot 
+# plt.figure(figsize=(7,7))
 plt.subplot(2, 5, 7)
 sns.distplot(mean_data_550, bins=20, kde=True, color='darkturquoise')
 plt.xticks(fontsize = 10)
 plt.yticks(fontsize = 10)
 ax = plt.gca()
+plt.ylabel('Density')
+plt.title('Dataset 1')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
@@ -116,6 +127,9 @@ sns.distplot(mean_data_206, bins=20, kde=True, color='darkturquoise')
 plt.xticks(fontsize = 10)
 plt.yticks(fontsize = 10)
 ax = plt.gca()
+plt.ylabel('Density')
+plt.title('Dataset 2')
+
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
@@ -124,6 +138,8 @@ sns.distplot(mean_data_COBRE, bins=20, kde=True, color='darkturquoise')
 plt.xticks(fontsize = 10)
 plt.yticks(fontsize = 10)
 ax = plt.gca()
+plt.ylabel('Density')
+plt.title('Dataset 3')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
@@ -132,12 +148,15 @@ sns.distplot(mean_data_UCAL, bins=20, kde=True, color='darkturquoise')
 plt.xticks(fontsize = 10)
 plt.yticks(fontsize = 10)
 ax = plt.gca()
+plt.ylabel('Density')
+plt.title('Dataset 4')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
 # Save to PDF format
+plt.subplots_adjust(wspace=0.4, hspace=0.2)
 plt.tight_layout()
-# pdf = PdfPages(r'D:\WorkStation_2018\WorkStation_CNN_Schizo\Figure\distribution1.pdf')
-# pdf.savefig()
-# pdf.close()
+pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\fc_matrics_and_correlation_and_distribution.pdf')
+pdf.savefig()
+pdf.close()
 plt.show()

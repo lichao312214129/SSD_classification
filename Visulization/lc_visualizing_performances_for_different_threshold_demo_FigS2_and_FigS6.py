@@ -174,23 +174,23 @@ plt.show()
 print('-'*50)
 
 
-# #%% Posthoc analysis: 
-# data_unmedicated_SSD_550 = scale_550_selected[
-#     (scale_550_selected['诊断']==3) & 
-#     (scale_550_selected['用药'] == 0)
-# ]
+#%% Posthoc analysis: 
+data_unmedicated_SSD_550 = scale_550_selected[
+    (scale_550_selected['诊断']==3) & 
+    (scale_550_selected['用药'] == 0)
+]
 
-# data_unmedicated_SP_550 = scale_550_selected[
-#     (scale_550_selected['诊断']==3) & 
-#     (scale_550_selected['病程月'] < 6) & 
-#     (scale_550_selected['用药'] == 0)
-# ]
+data_unmedicated_SP_550 = scale_550_selected[
+    (scale_550_selected['诊断']==3) & 
+    (scale_550_selected['病程月'] < 6) & 
+    (scale_550_selected['用药'] == 0)
+]
 
-# data_unmedicated_SZ_550 = scale_550_selected[
-#     (scale_550_selected['诊断']==3) & 
-#     (scale_550_selected['病程月'] >= 6) & 
-#     (scale_550_selected['用药'] == 0)
-# ]
+data_unmedicated_SZ_550 = scale_550_selected[
+    (scale_550_selected['诊断']==3) & 
+    (scale_550_selected['病程月'] >= 6) & 
+    (scale_550_selected['用药'] == 0)
+]
 
 
 # plt.figure(figsize=(10,7))
@@ -226,69 +226,69 @@ print('-'*50)
 # print(len(data_unmedicated_SSD_550 ), len(data_unmedicated_SP_550), len(data_unmedicated_SZ_550))
 
 
-# #%% Extract subjects' demographic data
-# subinfo_chronic_medicated = data_chronic_medicated_SSD_550_24[['folder', '年龄', '性别', '学历（年）', 'BPRS_Total', 'mean FD_Power', '病程月']]
-# subinfo_firstepisode_medicated = data_firstepisode_medicated_SSD_550_24[['folder', '年龄', '性别', '学历（年）', 'BPRS_Total', 'mean FD_Power', '病程月']]
-# subinfo_firstepisode_unmedicated = data_firstepisode_unmedicated_SSD_550_24[['folder', '年龄', '性别', '学历（年）', 'BPRS_Total', 'mean FD_Power', '病程月']]
+#%% Fig S2: demographic data
+subinfo_chronic_medicated = data_chronic_medicated_SSD_550_24[['folder', '年龄', '性别', '学历（年）', 'BPRS_Total', 'mean FD_Power', '病程月']]
+subinfo_firstepisode_medicated = data_firstepisode_medicated_SSD_550_24[['folder', '年龄', '性别', '学历（年）', 'BPRS_Total', 'mean FD_Power', '病程月']]
+subinfo_firstepisode_unmedicated = data_firstepisode_unmedicated_SSD_550_24[['folder', '年龄', '性别', '学历（年）', 'BPRS_Total', 'mean FD_Power', '病程月']]
 
-# ## Save index and subjects' demographic data
-# subinfo_chronic_medicated[['folder']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\index_chronic.txt', index=False, header=False)
-# subinfo_firstepisode_medicated[['folder']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\index_firstepisode_medicated.txt', index=False, header=False)
-# subinfo_firstepisode_unmedicated[['folder']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\index_firstepisode_unmedicated.txt', index=False, header=False)
+## Save index and subjects' demographic data
+subinfo_chronic_medicated[['folder']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\index_chronic.txt', index=False, header=False)
+subinfo_firstepisode_medicated[['folder']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\index_firstepisode_medicated.txt', index=False, header=False)
+subinfo_firstepisode_unmedicated[['folder']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\index_firstepisode_unmedicated.txt', index=False, header=False)
 
-# subinfo_chronic_medicated[['folder', '年龄', '性别', '学历（年）', 'mean FD_Power', '病程月']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\cov_chronic.txt', index=False)
-# subinfo_firstepisode_medicated[['folder', '年龄', '性别', '学历（年）', 'mean FD_Power', '病程月']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\cov_firstepisode_medicated.txt', index=False)
-# subinfo_firstepisode_unmedicated[['folder', '年龄', '性别', '学历（年）', 'mean FD_Power', '病程月']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\cov_firstepisode_unmedicated.txt', index=False)
+subinfo_chronic_medicated[['folder', '年龄', '性别', '学历（年）', 'mean FD_Power', '病程月']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\cov_chronic.txt', index=False)
+subinfo_firstepisode_medicated[['folder', '年龄', '性别', '学历（年）', 'mean FD_Power', '病程月']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\cov_firstepisode_medicated.txt', index=False)
+subinfo_firstepisode_unmedicated[['folder', '年龄', '性别', '学历（年）', 'mean FD_Power', '病程月']].to_csv(r'D:\WorkStation_2018\SZ_classification\Scale\cov_firstepisode_unmedicated.txt', index=False)
 
-# plt.figure(figsize=(8,10))
-# title_dict = {0:'Age', 1:'Education', 2:'BPRS', 3:'Head motion', 4: 'Gender', 5:'Duration'}
-# ylabel_dict = {0:'Year', 1:'Year', 2:'', 3:'', 4:'Proportion of male', 5:'Month'}
-# for i, df in enumerate(['年龄', '学历（年）', 'BPRS_Total', 'mean FD_Power', '性别', '病程月']):
-#     plt.subplot(2,3,i+1)
-#     if i == 4:
-#         plt.bar(0, subinfo_chronic_medicated[df].dropna().value_counts()[1]/len(subinfo_chronic_medicated), width=0.3, alpha=0.5)
-#         plt.grid(axis='y')
-#         plt.bar(1, subinfo_firstepisode_medicated[df].dropna().value_counts()[1]/len(subinfo_firstepisode_medicated), width=0.3, alpha=0.5)
-#         plt.grid(axis='y')
-#         plt.bar(2, subinfo_firstepisode_unmedicated[df].dropna().value_counts()[1]/len(subinfo_firstepisode_unmedicated), width=0.3, alpha=0.5)
-#         plt.grid(axis='y')
-#         tt = [
-#             len(subinfo_chronic_medicated[df].dropna()),
-#             len(subinfo_firstepisode_medicated[df].dropna()),
-#             len(subinfo_firstepisode_unmedicated[df].dropna())
-#         ]
-#         obs = [
-#             subinfo_chronic_medicated[df].dropna().value_counts()[1],
-#             subinfo_firstepisode_medicated[df].dropna().value_counts()[1],
-#             subinfo_firstepisode_unmedicated[df].dropna().value_counts()[1]
-#         ]
-#         chi, p = lc_chisqure(obs, tt)
-#     else:
-#         ViolinPlotMatplotlib().plot([subinfo_chronic_medicated[df].dropna().values], positions=[0])
-#         plt.grid(axis='y')
-#         ViolinPlotMatplotlib().plot([subinfo_firstepisode_medicated[df].dropna().values], positions=[1])
-#         plt.grid(axis='y')
-#         ViolinPlotMatplotlib().plot([subinfo_firstepisode_unmedicated[df].dropna().values], positions=[2])
-#         plt.grid(axis='y')
+plt.figure(figsize=(8,10))
+title_dict = {0:'Age', 1:'Education', 2:'BPRS', 3:'Head motion', 4: 'Gender', 5:'Duration'}
+ylabel_dict = {0:'Year', 1:'Year', 2:'', 3:'', 4:'Proportion of male', 5:'Month'}
+for i, df in enumerate(['年龄', '学历（年）', 'BPRS_Total', 'mean FD_Power', '性别', '病程月']):
+    plt.subplot(2,3,i+1)
+    if i == 4:
+        plt.bar(0, subinfo_chronic_medicated[df].dropna().value_counts()[1]/len(subinfo_chronic_medicated), width=0.3, alpha=0.5)
+        plt.grid(axis='y')
+        plt.bar(1, subinfo_firstepisode_medicated[df].dropna().value_counts()[1]/len(subinfo_firstepisode_medicated), width=0.3, alpha=0.5)
+        plt.grid(axis='y')
+        plt.bar(2, subinfo_firstepisode_unmedicated[df].dropna().value_counts()[1]/len(subinfo_firstepisode_unmedicated), width=0.3, alpha=0.5)
+        plt.grid(axis='y')
+        tt = [
+            len(subinfo_chronic_medicated[df].dropna()),
+            len(subinfo_firstepisode_medicated[df].dropna()),
+            len(subinfo_firstepisode_unmedicated[df].dropna())
+        ]
+        obs = [
+            subinfo_chronic_medicated[df].dropna().value_counts()[1],
+            subinfo_firstepisode_medicated[df].dropna().value_counts()[1],
+            subinfo_firstepisode_unmedicated[df].dropna().value_counts()[1]
+        ]
+        chi, p = lc_chisqure(obs, tt)
+    else:
+        ViolinPlotMatplotlib().plot([subinfo_chronic_medicated[df].dropna().values], positions=[0])
+        plt.grid(axis='y')
+        ViolinPlotMatplotlib().plot([subinfo_firstepisode_medicated[df].dropna().values], positions=[1])
+        plt.grid(axis='y')
+        ViolinPlotMatplotlib().plot([subinfo_firstepisode_unmedicated[df].dropna().values], positions=[2])
+        plt.grid(axis='y')
         
-#         f, p = oneway_anova(
-#             *[subinfo_chronic_medicated[df].dropna(), 
-#             subinfo_firstepisode_medicated[df].dropna(), 
-#             subinfo_firstepisode_unmedicated[df].dropna()]
-#         )
+        f, p = oneway_anova(
+            *[subinfo_chronic_medicated[df].dropna(), 
+            subinfo_firstepisode_medicated[df].dropna(), 
+            subinfo_firstepisode_unmedicated[df].dropna()]
+        )
 
-#     plt.yticks(fontsize=12)
-#     plt.xticks([0, 1, 2], ['Chronic SSD', 'First-episode medicated SSD', 'First-episode unmedicated SSD'], rotation=45, ha="right")
-#     plt.ylabel(ylabel_dict[i], fontsize=15)    
-#     plt.title(''.join([title_dict[i], f'(P={p:.2f})']), fontsize=12, fontweight="bold")
+    plt.yticks(fontsize=12)
+    plt.xticks([0, 1, 2], ['Chronic SSD', 'First-episode medicated SSD', 'First-episode unmedicated SSD'], rotation=45, ha="right")
+    plt.ylabel(ylabel_dict[i], fontsize=15)    
+    plt.title(''.join([title_dict[i], f' (P={p:.2f})']), fontsize=12, fontweight="bold")
 
     
-# plt.subplots_adjust(wspace = 0.2, hspace =0)
-# plt.tight_layout()
-# pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\Figures S6.pdf')
-# pdf.savefig()
-# pdf.close()
-# plt.show()
+plt.subplots_adjust(wspace = 0.2, hspace =0)
+plt.tight_layout()
+pdf = PdfPages(r'D:\WorkStation_2018\SZ_classification\Figure\Processed\Figure S2.pdf')
+pdf.savefig()
+pdf.close()
+plt.show()
 
 # plt.figure(figsize=(10,5))
 # sns.distplot(scale_550_selected[2][scale_550_selected[1]==1])
