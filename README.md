@@ -1,8 +1,6 @@
 # This repository is for the following paper: 
 ### Classification of schizophrenia spectrum disorder using machine learning and functional connectivity: reconsidering the clinical application.  
 
-NOTE: This repository rely on "easylearn": https://github.com/easylearn-fmri/easylearn
-
 <font >**Voxel_Label_Matching_Between_Two_Brain_Atalas**</font> is used to map the brainnetome atalas to Yeo 7 network atalas.  
 
 <font >**Data_Inspection**</font> is used to preprocess and inspect data.    
